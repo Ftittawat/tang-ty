@@ -151,8 +151,13 @@ export async function execute(interaction, client) {
 
     const maxMembers = parseInt(maxMembersRaw, 10);
     if (isNaN(maxMembers) || maxMembers < 2 || maxMembers > 50) {
-      await interaction.reply({ content: "❌ จำนวนสมาชิกต้องเป็นตัวเลข 2-50", ephemeral: true });
-      return;
+      if (maxMembers == 1) {
+        await interaction.reply({ content: "❌ 1 คนจะตั้งตี้เพื่ออะไร??", ephemeral: true });
+        return;
+      } else {
+        await interaction.reply({ content: "❌ จำนวนสมาชิกต้องอยู่ระหว่าง 2-50", ephemeral: true });
+        return;
+      }
     }
 
     const match = deadlineRaw.match(/^(\d{2})\/(\d{2})\/(\d{4})\s(\d{2}):(\d{2})$/);
@@ -168,7 +173,7 @@ export async function execute(interaction, client) {
     const deadline = new Date(`${yyyy}-${mm}-${dd}T${hh}:${min}:00+07:00`);
     if (isNaN(deadline.getTime()) || deadline <= new Date()) {
       await interaction.reply({
-        content: "❌ วันเวลาปิดรับสมาชิกต้องเป็นอนาคต",
+        content: "❌ วันเวลาปิดรับสมาชิกต้องเป็นอนาคต จะติดอยู่กับอดีตถึงเมื่อไหร่",
         ephemeral: true,
       });
       return;
