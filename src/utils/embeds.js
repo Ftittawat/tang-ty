@@ -28,6 +28,11 @@ export function buildPartyEmbed(party) {
   const color = COLOR_MAP[party.status] ?? Colors.Default;
 
   const deadlineTs = Math.floor(new Date(party.deadline).getTime() / 1000);
+  const date = new Date(deadlineTs * 1000)
+  const thaiDate = date.toLocaleString("th-TH", {
+    dateStyle: "full",
+    timeStyle: "short"
+  });
 
   const membersText =
     party.members.length === 0
@@ -45,7 +50,8 @@ export function buildPartyEmbed(party) {
       { name: "สถานะ", value: `${emoji} ${label}`, inline: true },
       { name: "สมาชิก", value: `👥 ${party.members.length} / ${party.maxMembers}`, inline: true },
       { name: "หัวหน้าปาร์ตี้", value: `👑 ${party.leaderName}`, inline: true },
-      { name: "⏰ ปิดรับสมาชิก", value: `<t:${deadlineTs}:F> (<t:${deadlineTs}:R>)`, inline: false },
+      //{ name: "⏰ ปิดรับสมาชิก", value: `<t:${deadlineTs}:F> (<t:${deadlineTs}:R>)`, inline: false },
+      { name: "⏰ ปิดรับสมาชิก", value: `${thaiDate}`, inline: false },
       {
         name: `รายชื่อสมาชิก (${party.members.length}/${party.maxMembers})`,
         value: membersText,
