@@ -25,7 +25,7 @@ function saveAll(data) {
   writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), "utf-8");
 }
 
-export function createParty({ activity, leaderId, leaderName, maxMembers, deadline }) {
+export function createParty({ activity, leaderId, leaderName, maxMembers, deadline, type = "regular", leaderClass = null }) {
   const id = randomBytes(4).toString("hex");
   const party = {
     id,
@@ -35,6 +35,7 @@ export function createParty({ activity, leaderId, leaderName, maxMembers, deadli
     maxMembers,
     deadline: deadline.toISOString(),
     status: PartyStatus.OPEN,
+    type,
     members: [],
     messageId: null,
     channelId: null,
@@ -43,7 +44,7 @@ export function createParty({ activity, leaderId, leaderName, maxMembers, deadli
   };
 
   // Auto-add leader as first member
-  party.members.push({ id: leaderId, name: leaderName });
+  party.members.push({ id: leaderId, name: leaderName, class: leaderClass });
 
   const data = loadAll();
   data[id] = party;
@@ -75,10 +76,10 @@ export function isLeader(party, userId) {
   return party.leaderId === userId;
 }
 
-export function addMember(party, userId, userName) {
+export function addMember(party, userId, userName, memberClass = null) {
   if (isMember(party, userId)) return false;
   if (party.members.length >= party.maxMembers) return false;
-  party.members.push({ id: userId, name: userName });
+  party.members.push({ id: userId, name: userName, class: memberClass });
   if (party.members.length >= party.maxMembers) party.status = PartyStatus.FULL;
   return true;
 }

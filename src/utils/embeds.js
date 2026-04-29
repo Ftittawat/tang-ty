@@ -30,6 +30,7 @@ export function buildPartyEmbed(party) {
   const deadlineTs = Math.floor(new Date(party.deadline).getTime() / 1000);
   const date = new Date(deadlineTs * 1000)
   const thaiDate = date.toLocaleString("th-TH", {
+    timeZone: "Asia/Bangkok",
     dateStyle: "full",
     timeStyle: "short"
   });
@@ -39,7 +40,8 @@ export function buildPartyEmbed(party) {
       ? "_ยังไม่มีสมาชิก_"
       : party.members
           .map((m, i) => {
-            return `${i + 1}. <@${m.id}>`;
+            const classLabel = m.class ? ` [${m.class}]` : "";
+            return `${i + 1}. <@${m.id}>${classLabel}`;
           })
           .join("\n");
 

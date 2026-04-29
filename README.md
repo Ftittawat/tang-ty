@@ -7,6 +7,7 @@
 | Command | คำอธิบาย |
 |---------|----------|
 | `/tangty` | สร้างปาร์ตี้ใหม่ (เปิด Modal) |
+| `/tangty-soj` | สร้างปาร์ตี้ SOJ พร้อมเลือกอาชีพ |
 | `/tangty-list` | ดูรายการปาร์ตี้ที่เปิดอยู่ |
 | `/tangty-info <id>` | ดูรายละเอียดด้วย Party ID |
 
@@ -19,6 +20,21 @@
 | 🔒 ปิดรับสมาชิก | หัวหน้าปาร์ตี้ |
 | 🔓 เปิดรับสมาชิก | หัวหน้าปาร์ตี้ |
 | ❌ ยกเลิกปาร์ตี้ | หัวหน้าปาร์ตี้ |
+
+## SOJ Party
+
+`/tangty-soj` ทำงานเหมือน `/tangty` แต่มีระบบเลือกอาชีพเพิ่มเติม
+
+**อาชีพที่รองรับ:** Ironclad, Sylph, Bloodstorm, Celestune, Nightwaker, Numina, Dragonsvelte
+
+**Flow ผู้สร้าง:**
+1. `/tangty-soj` → เลือกอาชีพของตัวเอง (dropdown)
+2. กรอก Modal (ชื่อกิจกรรม, จำนวนสมาชิก, deadline)
+3. ปาร์ตี้ถูกสร้างพร้อมแสดงอาชีพหัวหน้า
+
+**Flow ผู้เข้าร่วม:**
+1. กดปุ่ม ✅ เข้าร่วม → เลือกอาชีพ (ephemeral dropdown)
+2. เข้าร่วมพร้อมแสดงอาชีพในรายชื่อสมาชิก
 
 ## วิธีติดตั้ง
 
@@ -39,7 +55,7 @@ cp .env.example .env
 nano .env   # ใส่ DISCORD_TOKEN และ CLIENT_ID
 ```
 
-### 3. Register Slash Commands (ทำครั้งแรกครั้งเดียว)
+### 3. Register Slash Commands (ทำครั้งแรกครั้งเดียว หรือเมื่อเพิ่ม command ใหม่)
 
 ```bash
 # Local
@@ -66,13 +82,14 @@ docker compose logs -f
 ## โครงสร้างโปรเจกต์
 
 ```
-tang-ty-js/
+tang-ty/
 ├── src/
 │   ├── index.js                  # Entry point
 │   ├── deploy-commands.js        # Register slash commands
 │   ├── commands/
-│   │   ├── party.js              # /party command + Modal
-│   │   └── party-list-info.js   # /party-list, /party-info
+│   │   ├── party.js              # /tangty command
+│   │   ├── party-soj.js          # /tangty-soj command + SOJ_CLASSES
+│   │   └── party-list-info.js    # /tangty-list, /tangty-info
 │   ├── events/
 │   │   ├── ready.js              # On ready + deadline auto-close
 │   │   └── interactionCreate.js  # Handle all interactions
@@ -80,7 +97,7 @@ tang-ty-js/
 │   │   └── party.js              # Data model + JSON storage
 │   └── utils/
 │       ├── embeds.js             # EmbedBuilder
-│       └── components.js        # Button ActionRows
+│       └── components.js         # Button ActionRows
 ├── Dockerfile
 ├── docker-compose.yaml
 ├── package.json
