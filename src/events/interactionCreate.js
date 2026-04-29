@@ -165,7 +165,7 @@ export async function execute(interaction, client) {
     }
 
     const [, dd, mm, yyyy, hh, min] = match;
-    const deadline = new Date(`${yyyy}-${mm}-${dd}T${hh}:${min}:00`);
+    const deadline = new Date(`${yyyy}-${mm}-${dd}T${hh}:${min}:00+07:00`);
     if (isNaN(deadline.getTime()) || deadline <= new Date()) {
       await interaction.reply({
         content: "❌ วันเวลาปิดรับสมาชิกต้องเป็นอนาคต",
