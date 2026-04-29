@@ -1,0 +1,39 @@
+services:
+  tang-ty:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: tang-ty:latest
+    container_name: tang-ty
+    restart: unless-stopped
+
+    environment:
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - CLIENT_ID=${CLIENT_ID}
+      - DATA_FILE=/data/parties.json
+
+    volumes:
+      - tang-ty-data:/data
+
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: "0.5"
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('discord.js')"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  tang-ty-data:
+    driver: local
