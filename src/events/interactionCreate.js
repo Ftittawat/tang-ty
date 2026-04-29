@@ -189,4 +189,8 @@ export async function execute(interaction, client) {
   const embed = buildPartyEmbed(party);
   const components = buildPartyComponents(party);
   await interaction.update({ embeds: [embed], components });
+
+  // if (action === "party_join") {
+  //   await interaction.followUp({ content: `<@${userId}> เข้าร่วมปาร์ตี้แล้ว! 🎉` });
+  // }
 }

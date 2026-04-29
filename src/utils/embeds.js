@@ -35,7 +35,7 @@ export function buildPartyEmbed(party) {
       : party.members
           .map((m, i) => {
             const prefix = m.id === party.leaderId ? "👑" : `${i + 1}.`;
-            return `${prefix} ${m.name}`;
+            return `${prefix} ${m.name} (${m.id})`;
           })
           .join("\n");
 
