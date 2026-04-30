@@ -70,11 +70,20 @@ export async function execute(interaction, client) {
         ),
         new ActionRowBuilder().addComponents(
           new TextInputBuilder()
-            .setCustomId("deadline")
-            .setLabel("วันเวลาปิดรับสมาชิก (DD/MM/YYYY HH:MM)")
+            .setCustomId("date")
+            .setLabel("📅 วันปิดรับสมาชิก (DD/MM/YYYY)")
             .setStyle(TextInputStyle.Short)
-            .setPlaceholder("เช่น 25/12/2025 18:00")
-            .setMaxLength(16)
+            .setPlaceholder("เช่น 25/12/2025")
+            .setMaxLength(10)
+            .setRequired(true)
+        ),
+        new ActionRowBuilder().addComponents(
+          new TextInputBuilder()
+            .setCustomId("time")
+            .setLabel("⏰ เวลา (HH:MM)")
+            .setStyle(TextInputStyle.Short)
+            .setPlaceholder("เช่น 18:00")
+            .setMaxLength(5)
             .setRequired(true)
         )
       );
@@ -147,7 +156,8 @@ export async function execute(interaction, client) {
     const isSoj = interaction.customId === "modal_create_party_soj";
     const activity = interaction.fields.getTextInputValue("activity").trim();
     const maxMembersRaw = interaction.fields.getTextInputValue("max_members").trim();
-    const deadlineRaw = interaction.fields.getTextInputValue("deadline").trim();
+    const dateRaw = interaction.fields.getTextInputValue("date").trim();
+    const timeRaw = interaction.fields.getTextInputValue("time").trim();
 
     const maxMembers = parseInt(maxMembersRaw, 10);
     if (isNaN(maxMembers) || maxMembers < 2 || maxMembers > 50) {
@@ -160,17 +170,31 @@ export async function execute(interaction, client) {
       }
     }
 
-    const match = deadlineRaw.match(/^(\d{2})\/(\d{2})\/(\d{4})\s(\d{2}):(\d{2})$/);
-    if (!match) {
+    // validate date
+    const dateMatch = dateRaw.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    if (!dateMatch) {
       await interaction.reply({
-        content: "❌ รูปแบบวันเวลาไม่ถูกต้อง กรุณาใช้ DD/MM/YYYY HH:MM\nเช่น 25/12/2025 18:00",
+        content: "❌ รูปแบบวันที่ไม่ถูกต้อง ใช้ DD/MM/YYYY\nเช่น 25/12/2025",
         ephemeral: true,
       });
       return;
     }
 
-    const [, dd, mm, yyyy, hh, min] = match;
+    // validate time
+    const timeMatch = timeRaw.match(/^(\d{2}):(\d{2})$/);
+    if (!timeMatch) {
+      await interaction.reply({
+        content: "❌ รูปแบบเวลาไม่ถูกต้อง ใช้ HH:MM\nเช่น 18:00",
+        ephemeral: true,
+      });
+      return;
+    }
+
+    const [, dd, mm, yyyy] = dateMatch;
+    const [, hh, min] = timeMatch;
+
     const deadline = new Date(`${yyyy}-${mm}-${dd}T${hh}:${min}:00+07:00`);
+    
     if (isNaN(deadline.getTime()) || deadline <= new Date()) {
       await interaction.reply({
         content: "❌ วันเวลาปิดรับสมาชิกต้องเป็นอนาคต จะติดอยู่กับอดีตถึงเมื่อไหร่",
