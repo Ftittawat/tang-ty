@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: tang-ty:0.1.7
+    image: tang-ty:latest
     container_name: tang-ty
     restart: unless-stopped
 
