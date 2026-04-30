@@ -31,18 +31,27 @@ export async function execute(interaction) {
     .setMaxLength(3)
     .setRequired(true);
 
-  const deadlineInput = new TextInputBuilder()
-    .setCustomId("deadline")
-    .setLabel("วันเวลาปิดรับสมาชิก (DD/MM/YYYY HH:MM)")
+  const dateInput = new TextInputBuilder()
+    .setCustomId("date")
+    .setLabel("วัน (DD/MM/YYYY)")
     .setStyle(TextInputStyle.Short)
-    .setPlaceholder("เช่น 25/12/2025 18:00")
-    .setMaxLength(16)
+    .setPlaceholder("เช่น 25/12/2025")
+    .setMaxLength(10)
+    .setRequired(true);
+
+  const timeInput = new TextInputBuilder()
+    .setCustomId("time")
+    .setLabel("เวลา (HH:MM)")
+    .setStyle(TextInputStyle.Short)
+    .setPlaceholder("เช่น 18:00")
+    .setMaxLength(5)
     .setRequired(true);
 
   modal.addComponents(
     new ActionRowBuilder().addComponents(activityInput),
     new ActionRowBuilder().addComponents(maxMembersInput),
-    new ActionRowBuilder().addComponents(deadlineInput)
+    new ActionRowBuilder().addComponents(dateInput),
+    new ActionRowBuilder().addComponents(timeInput)
   );
 
   await interaction.showModal(modal);
