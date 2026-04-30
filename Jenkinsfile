@@ -11,6 +11,8 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'tang-ty'
+        DISCORD_TOKEN = credentials('DISCORD_TOKEN')
+        CLIENT_ID = credentials('CLIENT_ID')
     }
 
     stages {
