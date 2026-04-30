@@ -71,7 +71,7 @@ export async function execute(interaction, client) {
         new ActionRowBuilder().addComponents(
           new TextInputBuilder()
             .setCustomId("date")
-            .setLabel("📅 วันปิดรับสมาชิก (DD/MM/YYYY)")
+            .setLabel("📅 วันที่เริ่มกิจกรรม (DD/MM/YYYY)")
             .setStyle(TextInputStyle.Short)
             .setPlaceholder("เช่น 25/12/2025")
             .setMaxLength(10)
@@ -80,7 +80,7 @@ export async function execute(interaction, client) {
         new ActionRowBuilder().addComponents(
           new TextInputBuilder()
             .setCustomId("time")
-            .setLabel("⏰ เวลา (HH:MM)")
+            .setLabel("⏰ เวลาเริ่มกิจกรรม (HH:MM)")
             .setStyle(TextInputStyle.Short)
             .setPlaceholder("เช่น 18:00")
             .setMaxLength(5)
