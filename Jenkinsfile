@@ -11,7 +11,6 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'tang-ty'
-        COMPOSE_FILE = "${WORKSPACE}/docker-compose.yaml"
     }
 
     stages {
@@ -49,9 +48,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh """
-                    docker compose -f ${COMPOSE_FILE} up -d --force-recreate
-                """
+                sh "docker compose up -d --force-recreate"
             }
         }
 
