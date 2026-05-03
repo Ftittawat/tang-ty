@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "discord.js";
 
 export const data = new SlashCommandBuilder()
-  .setName("availability-post")
+  .setName("tangty-party-check")
   .setDescription("สร้างโพสต์ให้กดวันว่าง");
 
   const DAY_EMOJIS = {
