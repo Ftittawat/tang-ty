@@ -226,6 +226,12 @@ export async function execute(interaction, client) {
     party.channelId = interaction.channelId;
     party.guildId = interaction.guildId;
     saveParty(party);
+
+    console.log(
+      `🚀 [Party Created] id=${party.id} type=${party.type}` +
+      ` | leader="${interaction.user.displayName}" (${interaction.user.id})` +
+      ` | server="${interaction.guild?.name}" (${interaction.guildId})`
+    );
     return;
   }
 
