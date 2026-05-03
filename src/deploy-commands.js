@@ -7,12 +7,14 @@ import { REST, Routes } from "discord.js";
 import * as partyCmd from "./commands/party.js";
 import * as partySojCmd from "./commands/party-soj.js";
 import * as partyListCmd from "./commands/party-list-info.js";
+import * as partyCheckCmd from "./commands/party-check.js";
 
 const commands = [
   partyCmd.data.toJSON(),
   partySojCmd.data.toJSON(),
   partyListCmd.listData.toJSON(),
   partyListCmd.infoData.toJSON(),
+  partyCheckCmd.data.toJSON(),
 ];
 
 const rest = new REST().setToken(process.env.DISCORD_TOKEN);
