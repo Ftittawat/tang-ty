@@ -34,7 +34,9 @@ export async function execute(interaction) {
     ⚔️ กด emoji ด้านล่างเพื่อเลือกวัน`
   )
     .setThumbnail("https://i.imgur.com/8Km9tLL.png")
-    .setImage("https://i.imgur.com/Z6a9Z6F.png");
+    .setImage("https://i.imgur.com/Z6a9Z6F.png")
+
+  const message = await interaction.channel.send({ embeds: [embed] });
 
   for (const emoji of Object.values(DAY_EMOJIS)) {
     await message.react(emoji);
