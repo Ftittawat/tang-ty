@@ -21,7 +21,7 @@ export async function execute(interaction) {
   
   const embed = new EmbedBuilder()
     .setColor(0x5865F2) // สี (โทน Discord)
-    .setTitle("🎮 **[ โพสต์สอบถามวันที่สะดวกลงดันสัปดาห์นี้ ]**")
+    .setTitle("**โพสต์สอบถามวันที่สะดวกลงดันสัปดาห์นี้**")
     .setDescription(
     `
     📅 เลือกวันที่คุณ "สะดวกลงดัน"
@@ -34,8 +34,7 @@ export async function execute(interaction) {
 
     ⚔️ กด emoji ด้านล่างเพื่อเลือกวัน`
   )
-    .setThumbnail("https://i.imgur.com/8Km9tLL.png")
-    .setImage("https://i.imgur.com/Z6a9Z6F.png")
+    .setThumbnail("https://sm.ign.com/ign_es/cover/s/sword-of-j/sword-of-justice_95un.jpg")
 
   const message = await interaction.channel.send({ embeds: [embed] });
 
