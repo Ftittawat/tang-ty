@@ -18,18 +18,23 @@ export const data = new SlashCommandBuilder()
 export async function execute(interaction) {
   await interaction.reply({ content: "กำลังสร้างโพสต์...", ephemeral: true });
   
-  const message = await interaction.channel.send(
-    `📅 **กด emoji เพื่อเลือกวันว่าง**
+  const embed = new EmbedBuilder()
+    .setColor(0x5865F2) // สี (โทน Discord)
+    .setTitle("🎮 **[ โพสต์สอบถามวันที่สะดวกลงดันสัปดาห์นี้ ]**")
+    .setDescription(
+    `
+    📅 เลือกวันที่คุณ "สะดวกลงดัน"
 
-      🌙 จันทร์
-      🔥 อังคาร
-      🌿 พุธ
-      ⚡ พฤหัส
-      🎉 ศุกร์
-      🍻 เสาร์
-      🌞 อาทิตย์
-      ❌ ไม่ว่าง`
-  );
+    🌙 จันทร์     🔥 อังคาร     🌿 พุธ  
+    ⚡ พฤหัส     🎉 ศุกร์     🍻 เสาร์  
+    🌞 อาทิตย์
+
+    ❌ พัก / ไม่ว่าง
+
+    ⚔️ กด emoji ด้านล่างเพื่อเลือกวัน`
+  )
+    .setThumbnail("https://i.imgur.com/8Km9tLL.png")
+    .setImage("https://i.imgur.com/Z6a9Z6F.png");
 
   for (const emoji of Object.values(DAY_EMOJIS)) {
     await message.react(emoji);
