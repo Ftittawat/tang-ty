@@ -12,9 +12,12 @@ export const data = new SlashCommandBuilder()
     fri: "🎉",
     sat: "🍻",
     sun: "🌞",
+    not: "❌",
   };
 
 export async function execute(interaction) {
+  await interaction.reply({ content: "กำลังสร้างโพสต์...", ephemeral: true });
+  
   const message = await interaction.channel.send(
     `📅 **กด emoji เพื่อเลือกวันว่าง**
 
@@ -24,12 +27,13 @@ export async function execute(interaction) {
       ⚡ พฤหัส
       🎉 ศุกร์
       🍻 เสาร์
-      🌞 อาทิตย์`
+      🌞 อาทิตย์
+      ❌ ไม่ว่าง`
   );
 
   for (const emoji of Object.values(DAY_EMOJIS)) {
     await message.react(emoji);
   }
 
-  await interaction.editReply("สร้างโพสต์แล้ว ✅");
+  await interaction.deleteReply();
 }

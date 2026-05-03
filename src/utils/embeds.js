@@ -53,7 +53,7 @@ export function buildPartyEmbed(party) {
       { name: "สมาชิก", value: `👥 ${party.members.length} / ${party.maxMembers}`, inline: true },
       { name: "หัวหน้าปาร์ตี้", value: `👑 ${party.leaderName}`, inline: true },
       //{ name: "⏰ ปิดรับสมาชิก", value: `<t:${deadlineTs}:F> (<t:${deadlineTs}:R>)`, inline: false },
-      { name: "วันเวลาเริ่ม", value: `${thaiDate} (<t:${deadlineTs}:R>)`, inline: false },
+      { name: "⚔️ วันเวลาเริ่ม ⚔️", value: `${thaiDate} (<t:${deadlineTs}:R>)`, inline: false },
       {
         name: `รายชื่อสมาชิก (${party.members.length}/${party.maxMembers})`,
         value: membersText,
