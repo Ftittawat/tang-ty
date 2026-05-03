@@ -27,10 +27,9 @@ export async function execute(interaction) {
       🌞 อาทิตย์`
   );
 
-  // ใส่ reaction ให้ครบ
   for (const emoji of Object.values(DAY_EMOJIS)) {
     await message.react(emoji);
   }
 
-  await interaction.reply({ content: "สร้างโพสต์แล้ว", ephemeral: true });
+  await interaction.editReply("สร้างโพสต์แล้ว ✅");
 }
