@@ -219,13 +219,49 @@ export async function execute(interaction, client) {
     const embed = buildPartyEmbed(party);
     const components = buildPartyComponents(party);
 
-    await interaction.reply({ embeds: [embed], components });
+  await interaction.reply({
+    content: "@everyone",
+    embeds: [embed],
+    components,
+    allowedMentions: { parse: ["everyone"] },
+  });
+
     const msg = await interaction.fetchReply();
 
     party.messageId = msg.id;
     party.channelId = interaction.channelId;
     party.guildId = interaction.guildId;
     saveParty(party);
+
+    const now = new Date();
+    const delay = party.deadline - now;
+
+    if (delay > 0) {
+      setTimeout(async () => {
+        try {
+          const channel = await client.channels.fetch(party.channelId);
+          if (!channel) return;
+
+          const memberIds = [
+            party.leaderId,
+            ...party.members.map(m => m.userId),
+          ];
+
+          const uniqueIds = [...new Set(memberIds)];
+          const mentions = uniqueIds.map(id => `<@${id}>`).join(" ");
+
+          await channel.send({
+            content: `${mentions}\n⏰ ถึงเวลาลงดัน "${party.activity}" แล้ว! ⚔️`,
+            allowedMentions: {
+              users: uniqueIds,
+            },
+          });
+
+        } catch (err) {
+          console.error("❌ ส่งแจ้งเตือนไม่สำเร็จ:", err);
+        }
+      }, delay);
+    }
 
     console.log(
       `🚀 [Party Created] id=${party.id} type=${party.type}` +

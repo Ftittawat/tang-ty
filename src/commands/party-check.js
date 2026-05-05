@@ -21,10 +21,10 @@ export async function execute(interaction) {
   
   const embed = new EmbedBuilder()
     .setColor(0x5865F2) // สี (โทน Discord)
-    .setTitle("**โพสต์สอบถามวันที่สะดวกลงดันสัปดาห์นี้**")
+    .setTitle("**โพสต์สอบถามวันที่สะดวกสัปดาห์นี้**")
     .setDescription(
     `
-    📅 เลือกวันที่คุณ "สะดวกลงดัน"
+    📅 เลือกวันที่คุณ "สะดวก"
 
     💛 จันทร์
     💗 อังคาร
