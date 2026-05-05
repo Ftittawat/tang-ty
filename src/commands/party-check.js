@@ -6,13 +6,13 @@ export const data = new SlashCommandBuilder()
   .setDescription("สร้างโพสต์ให้กดวันว่าง");
 
   const DAY_EMOJIS = {
-    mon: "🌙",
-    tue: "🔥",
-    wed: "🌿",
-    thu: "⚡",
-    fri: "🎉",
-    sat: "🍻",
-    sun: "🌞",
+    mon: "🟡",
+    tue: "🌸",
+    wed: "🟢",
+    thu: "🟠",
+    fri: "🔵",
+    sat: "🟣",
+    sun: "🔴",
     not: "❌",
   };
 
@@ -26,9 +26,13 @@ export async function execute(interaction) {
     `
     📅 เลือกวันที่คุณ "สะดวกลงดัน"
 
-    🌙 จันทร์     🔥 อังคาร     🌿 พุธ  
-    ⚡ พฤหัส     🎉 ศุกร์     🍻 เสาร์  
-    🌞 อาทิตย์
+    🟡 จันทร์
+    🌸 อังคาร
+    🟢 พุธ  
+    🟠 พฤหัส
+    🔵 ศุกร์
+    🟣 เสาร์  
+    🔴 อาทิตย์
 
     ❌ พัก / ไม่ว่าง
 
