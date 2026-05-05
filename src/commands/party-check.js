@@ -24,7 +24,7 @@ export async function execute(interaction) {
     .setTitle("**โพสต์สอบถามวันที่สะดวกลงดันสัปดาห์นี้**")
     .setDescription(
     `
-    📅 เลือกวันที่คุณ "สะดวกลงดัน" @everyone
+    📅 เลือกวันที่คุณ "สะดวกลงดัน"
 
     💛 จันทร์
     💗 อังคาร
@@ -40,6 +40,7 @@ export async function execute(interaction) {
   )
 
   const message = await interaction.channel.send({
+    content: "@everyone",
     embeds: [embed],
     allowedMentions: {
       parse: ["everyone"],
