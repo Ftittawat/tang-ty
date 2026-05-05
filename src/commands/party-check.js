@@ -40,7 +40,6 @@ export async function execute(interaction) {
   )
 
   const message = await interaction.channel.send({
-    content: "@everyone",
     embeds: [embed],
     allowedMentions: {
       parse: ["everyone"],
