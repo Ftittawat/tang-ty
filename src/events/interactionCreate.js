@@ -233,36 +233,6 @@ export async function execute(interaction, client) {
     party.guildId = interaction.guildId;
     saveParty(party);
 
-    const now = new Date();
-    const delay = party.deadline - now;
-
-    if (delay > 0) {
-    setTimeout(async () => {
-        try {
-          const channel = await client.channels.fetch(party.channelId);
-          if (!channel) return;
-
-          const memberIds = [
-            party.leaderId,
-            ...party.members.map(m => m.id),
-          ];
-
-          const uniqueIds = [...new Set(memberIds)];
-          const mentions = uniqueIds.map(id => `<@${id}>`).join(" ");
-
-          await channel.send({
-            content: `${mentions}\n⏰ ถึงเวลาลงดัน "${party.activity}" แล้ว! ⚔️`,
-            allowedMentions: {
-              users: uniqueIds,
-            },
-          });
-
-        } catch (err) {
-          console.error("❌ ส่งแจ้งเตือนไม่สำเร็จ:", err);
-        }
-      }, delay);
-    }
-
     console.log(
       `🚀 [Party Created] id=${party.id} type=${party.type}` +
       ` | leader="${interaction.user.displayName}" (${interaction.user.id})` +
@@ -280,6 +250,14 @@ export async function execute(interaction, client) {
   const party = getParty(partyId);
   if (!party) {
     await interaction.reply({ content: "❌ ไม่พบปาร์ตี้นี้", ephemeral: true });
+    return;
+  }
+
+  if (party.status === PartyStatus.ENDED) {
+    await interaction.reply({
+      content: "❌ ปาร์ตี้นี้สิ้นสุดแล้ว",
+      ephemeral: true,
+    });
     return;
   }
 
@@ -381,6 +359,28 @@ export async function execute(interaction, client) {
         return;
       }
       party.status = PartyStatus.CANCELLED;
+      saveParty(party);
+      break;
+    }
+
+    case "party_end": {
+      if (!isLeader(party, userId)) {
+        await interaction.reply({
+          content: "❌ เฉพาะหัวหน้าปาร์ตี้เท่านั้น",
+          ephemeral: true,
+        });
+        return;
+      }
+
+      if (party.status === PartyStatus.ENDED) {
+        await interaction.reply({
+          content: "❌ ปาร์ตี้นี้สิ้นสุดไปแล้ว",
+          ephemeral: true,
+        });
+        return;
+      }
+
+      party.status = PartyStatus.ENDED;
       saveParty(party);
       break;
     }

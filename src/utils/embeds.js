@@ -6,13 +6,15 @@ const STATUS_EMOJI = {
   [PartyStatus.FULL]: "🔴",
   [PartyStatus.CLOSED]: "🔒",
   [PartyStatus.CANCELLED]: "❌",
+  [PartyStatus.ENDED]: "🏁",
 };
 
 const STATUS_LABEL = {
-  [PartyStatus.OPEN]: "รับสมาชิกอยู่",
-  [PartyStatus.FULL]: "เต็มแล้ว",
+  [PartyStatus.OPEN]: "รับสมาชิก",
+  [PartyStatus.FULL]: "เต็ม",
   [PartyStatus.CLOSED]: "ปิดรับสมาชิก",
-  [PartyStatus.CANCELLED]: "ยกเลิกแล้ว",
+  [PartyStatus.CANCELLED]: "ยกเลิก",
+  [PartyStatus.ENDED]: "สิ้นสุด",
 };
 
 const COLOR_MAP = {
@@ -20,6 +22,7 @@ const COLOR_MAP = {
   [PartyStatus.FULL]: Colors.Orange,
   [PartyStatus.CLOSED]: Colors.Blurple,
   [PartyStatus.CANCELLED]: Colors.Red,
+  [PartyStatus.ENDED]: Colors.Grey,
 };
 
 export function buildPartyEmbed(party) {

@@ -9,6 +9,7 @@ export const PartyStatus = {
   FULL: "full",
   CLOSED: "closed",
   CANCELLED: "cancelled",
+  ENDED: "ended",
 };
 
 function loadAll() {
