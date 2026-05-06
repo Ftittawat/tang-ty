@@ -237,14 +237,14 @@ export async function execute(interaction, client) {
     const delay = party.deadline - now;
 
     if (delay > 0) {
-      setTimeout(async () => {
+    setTimeout(async () => {
         try {
           const channel = await client.channels.fetch(party.channelId);
           if (!channel) return;
 
           const memberIds = [
             party.leaderId,
-            ...party.members.map(m => m.userId),
+            ...party.members.map(m => m.id),
           ];
 
           const uniqueIds = [...new Set(memberIds)];
