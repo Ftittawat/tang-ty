@@ -7,6 +7,8 @@ export function buildPartyComponents(party) {
   const isClosed = party.status === PartyStatus.CLOSED;
   const isCancelled = party.status === PartyStatus.CANCELLED;
 
+  const isEnded = party.status === PartyStatus.ENDED;
+
   // Row 1: Member actions
   const memberRow = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
@@ -14,13 +16,13 @@ export function buildPartyComponents(party) {
       .setLabel("เข้าร่วม")
       .setEmoji("✅")
       .setStyle(ButtonStyle.Success)
-      .setDisabled(!isOpen),
+      .setDisabled(!isOpen || isEnded),
     new ButtonBuilder()
       .setCustomId(`party_leave:${party.id}`)
       .setLabel("ออกจากปาร์ตี้")
       .setEmoji("🚪")
       .setStyle(ButtonStyle.Secondary)
-      .setDisabled(!isActive)
+      .setDisabled(!isActive || isEnded)
   );
 
   // Row 2: Leader actions
@@ -30,19 +32,24 @@ export function buildPartyComponents(party) {
       .setLabel("ปิดรับสมาชิก")
       .setEmoji("🔒")
       .setStyle(ButtonStyle.Primary)
-      .setDisabled(!isActive),
+      .setDisabled(!isActive || isEnded),
     new ButtonBuilder()
       .setCustomId(`party_open:${party.id}`)
       .setLabel("เปิดรับสมาชิก")
       .setEmoji("🔓")
       .setStyle(ButtonStyle.Primary)
-      .setDisabled(!isClosed),
+      .setDisabled(!isClosed || isEnded),
     new ButtonBuilder()
       .setCustomId(`party_cancel:${party.id}`)
       .setLabel("ยกเลิกปาร์ตี้")
       .setEmoji("❌")
       .setStyle(ButtonStyle.Danger)
-      .setDisabled(isCancelled)
+      .setDisabled(isCancelled || isEnded),
+    new ButtonBuilder()
+      .setCustomId(`party_end:${party.id}`)
+      .setLabel("สิ้นสุดปาร์ตี้")
+      .setStyle(ButtonStyle.Danger)
+      .setDisabled(isEnded)
   );
 
   return [memberRow, leaderRow];
