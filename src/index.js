@@ -7,6 +7,7 @@ import * as partyListCmd from "./commands/party-list-info.js";
 import * as interactionCreate from "./events/interactionCreate.js";
 import * as partyCheckCmd from "./commands/party-check.js";
 import * as logConfigCmd from "./commands/log-config.js";
+import * as tripCmd from "./commands/trip.js";
 import * as ready from "./events/ready.js";
 import * as voiceStateUpdate from "./events/voiceStateUpdate.js";
 import * as guildMemberAdd from "./events/guildMemberAdd.js";
@@ -30,6 +31,7 @@ client.commands.set("tangty-list", { execute: partyListCmd.listExecute });
 client.commands.set("tangty-info", { execute: partyListCmd.infoExecute });
 client.commands.set("tangty-party-check", { execute: partyCheckCmd.execute });
 client.commands.set("tangty-log", { execute: logConfigCmd.execute });
+client.commands.set("tangty-trip", { execute: tripCmd.execute });
 
 // ─── Register Events ──────────────────────────────────────────────────
 const events = [

@@ -12,6 +12,7 @@ services:
       - CLIENT_ID=${CLIENT_ID}
       - DATA_FILE=/data/parties.json
       - LOG_CONFIG_FILE=/data/log-config.json
+      - TRIP_FILE=/data/trips.json
 
     volumes:
       - tang-ty-data:/data

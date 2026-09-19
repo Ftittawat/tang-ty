@@ -21,5 +21,6 @@ USER botuser
 ENV NODE_ENV=production
 ENV DATA_FILE=/data/parties.json
 ENV LOG_CONFIG_FILE=/data/log-config.json
+ENV TRIP_FILE=/data/trips.json
 
 CMD ["node", "src/index.js"]
