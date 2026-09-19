@@ -11,6 +11,7 @@
 | `/tangty-list` | ดูรายการปาร์ตี้ที่เปิดอยู่ |
 | `/tangty-info <id>` | ดูรายละเอียดด้วย Party ID |
 | `/tangty-log` | ตั้งค่า Server Log (ต้องมีสิทธิ์ `Manage Server`) |
+| `/tangty-trip` | To-do list สถานที่เที่ยวที่อยากไป |
 
 ## ปุ่มในปาร์ตี้
 
@@ -36,6 +37,34 @@
 **Flow ผู้เข้าร่วม:**
 1. กดปุ่ม ✅ เข้าร่วม → เลือกอาชีพ (ephemeral dropdown)
 2. เข้าร่วมพร้อมแสดงอาชีพในรายชื่อสมาชิก
+
+## 🧳 Trip To-do List
+
+รายการสถานที่เที่ยวที่อยากไป กดโหวต "อยากไป" และเช็คว่าไปมาแล้ว
+
+| Command | คำอธิบาย |
+|---------|----------|
+| `/tangty-trip add` | เพิ่มสถานที่ (เปิด Modal: สถานที่ + รายละเอียด) |
+| `/tangty-trip list` | ดูรายการทั้งหมดในเซิร์ฟเวอร์ (แยก อยากไป / ไปแล้ว) |
+
+### ปุ่มในแต่ละรายการ
+
+| ปุ่ม | ใครกดได้ | ผล |
+|------|---------|-----|
+| 🙋 อยากไป | ทุกคน | เพิ่มชื่อเข้ารายชื่อคนอยากไป (กดซ้ำ = ยกเลิก) |
+| ✅ ไปแล้ว | ผู้เพิ่ม / `Manage Server` | เปลี่ยนสถานะเป็นไปแล้ว (กดซ้ำ = ย้อนกลับ) |
+| 🗑️ ลบรายการ | ผู้เพิ่ม / `Manage Server` | ลบรายการออกจาก to-do list |
+
+ข้อมูลที่แสดงในแต่ละรายการ:
+
+- 📍 ชื่อสถานที่ + รายละเอียด (ถ้ามี)
+- สถานะ 🕒 อยากไป / ✅ ไปแล้ว
+- **ผู้เพิ่ม** รายการ
+- รายชื่อ **คนที่อยากไป** พร้อมจำนวน
+
+รายการแยกตามเซิร์ฟเวอร์ — `/tangty-trip list` เห็นเฉพาะของเซิร์ฟเวอร์ตัวเอง และปุ่มของรายการเซิร์ฟเวอร์อื่นกดข้ามไม่ได้
+
+> การลบจะเปลี่ยนข้อความเดิมเป็น "🗑️ ลบรายการแล้ว" (ไม่ได้ลบข้อความทิ้ง) เพื่อให้ยังเห็นร่องรอยว่าใครลบ
 
 ## 📝 Server Log
 
@@ -132,7 +161,8 @@ tang-ty/
 │   │   ├── party.js              # /tangty command
 │   │   ├── party-soj.js          # /tangty-soj command + SOJ_CLASSES
 │   │   ├── party-list-info.js    # /tangty-list, /tangty-info
-│   │   └── log-config.js         # /tangty-log (set / status / off)
+│   │   ├── log-config.js         # /tangty-log (set / status / off)
+│   │   └── trip.js               # /tangty-trip + ปุ่มของ to-do list
 │   ├── events/
 │   │   ├── ready.js              # On ready + deadline auto-close
 │   │   ├── interactionCreate.js  # Handle all interactions
@@ -141,12 +171,14 @@ tang-ty/
 │   │   └── guildMemberRemove.js  # Log คนออกจากเซิร์ฟเวอร์
 │   ├── models/
 │   │   ├── party.js              # Data model + JSON storage
-│   │   └── log-config.js         # ห้อง log แยกตามเซิร์ฟเวอร์
+│   │   ├── log-config.js         # ห้อง log แยกตามเซิร์ฟเวอร์
+│   │   └── trip.js               # To-do list สถานที่เที่ยว
 │   └── utils/
 │       ├── embeds.js             # EmbedBuilder
 │       ├── components.js         # Button ActionRows
 │       ├── log-embeds.js         # Embed ของ server log
-│       └── server-log.js         # ส่ง log แบบแยกตามเซิร์ฟเวอร์
+│       ├── server-log.js         # ส่ง log แบบแยกตามเซิร์ฟเวอร์
+│       └── trip-embeds.js        # Embed + ปุ่มของ trip
 ├── Dockerfile
 ├── docker-compose.yaml
 ├── package.json

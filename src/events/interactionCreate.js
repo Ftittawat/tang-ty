@@ -18,6 +18,7 @@ import {
 import { buildPartyEmbed } from "../utils/embeds.js";
 import { buildPartyComponents } from "../utils/components.js";
 import { SOJ_CLASSES } from "../commands/party-soj.js";
+import { handleTripInteraction } from "../commands/trip.js";
 
 export const name = "interactionCreate";
 
@@ -38,6 +39,9 @@ export async function execute(interaction, client) {
     }
     return;
   }
+
+  // ─── Trip To-do List (modal + ปุ่ม) ────────────────────────────────
+  if (await handleTripInteraction(interaction, client)) return;
 
   // ─── String Select Menu ───────────────────────────────────────────
   if (interaction.isStringSelectMenu()) {
