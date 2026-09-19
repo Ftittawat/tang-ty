@@ -8,6 +8,7 @@ import * as partyCmd from "./commands/party.js";
 import * as partySojCmd from "./commands/party-soj.js";
 import * as partyListCmd from "./commands/party-list-info.js";
 import * as partyCheckCmd from "./commands/party-check.js";
+import * as logConfigCmd from "./commands/log-config.js";
 
 const commands = [
   partyCmd.data.toJSON(),
@@ -15,6 +16,7 @@ const commands = [
   partyListCmd.listData.toJSON(),
   partyListCmd.infoData.toJSON(),
   partyCheckCmd.data.toJSON(),
+  logConfigCmd.data.toJSON(),
 ];
 
 const rest = new REST().setToken(process.env.DISCORD_TOKEN);
