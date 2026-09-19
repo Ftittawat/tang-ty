@@ -11,6 +11,7 @@ services:
       - DISCORD_TOKEN=${DISCORD_TOKEN}
       - CLIENT_ID=${CLIENT_ID}
       - DATA_FILE=/data/parties.json
+      - LOG_CONFIG_FILE=/data/log-config.json
 
     volumes:
       - tang-ty-data:/data
